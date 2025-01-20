@@ -8,7 +8,6 @@
 #include <sstream>
 using namespace std;
 
-// ** Enum and Structures **
 enum Status { Available, Borrowed, Reserved };
 
 struct Book {
@@ -38,12 +37,12 @@ struct Transaction {
     Transaction* next;
 };
 
-// ** Global Pointers for Linked Lists **
+
 Book* bookHead = nullptr;
 Member* memberHead = nullptr;
 Transaction* transactionHead = nullptr;
 
-// ** Helper Functions for Date Management **
+
 string getCurrentDate() {
     time_t now = time(0);
     tm* ltm = localtime(&now);
@@ -60,7 +59,7 @@ string calculateDueDate(int days) {
     return string(buffer);
 }
 
-// ** Book Management **
+
 void addBook() {
     Book* newBook = new Book;
     cout << "Enter Book ID: ";
@@ -125,7 +124,7 @@ void removeBook() {
     cout << "Book removed successfully!\n";
 }
 
-// ** Member Management **
+
 void addMember() {
     Member* newMember = new Member;
     cout << "Enter Member ID: ";
@@ -151,7 +150,7 @@ void displayMembers() {
     }
 }
 
-// ** Borrow and Return Books **
+
 void borrowBook(int memberID, int bookID) {
     Book* book = bookHead;
     while (book && book->id != bookID) {
@@ -185,13 +184,14 @@ void borrowBook(int memberID, int bookID) {
     transaction->memberID = memberID;
     transaction->bookID = bookID;
     transaction->borrowDate = getCurrentDate();
-    transaction->dueDate = calculateDueDate(14); // Default due in 14 days
+    transaction->dueDate = calculateDueDate(14); 
     transaction->returnDate = "";
     transaction->next = transactionHead;
     transactionHead = transaction;
 
     cout << "Book borrowed successfully! Due date: " << transaction->dueDate << "\n";
 }
+
 
 void returnBook(int memberID, int bookID) {
     Transaction* transaction = transactionHead;
@@ -223,9 +223,8 @@ void returnBook(int memberID, int bookID) {
     cout << "Book returned successfully on " << transaction->returnDate << "\n";
 }
 
-// ** File Management - Saving, Sorting, and Searching **
 
-// Save to file
+
 void saveToFile() {
     ofstream bookFile("books.txt");
     Book* current = bookHead;
@@ -242,7 +241,8 @@ void saveToFile() {
     cout << "Data saved to books.txt\n";
 }
 
-// Load from file
+
+
 void loadFromFile() {
     ifstream bookFile("books.txt");
     if (!bookFile) {
@@ -281,7 +281,6 @@ void loadFromFile() {
     cout << "Data loaded from books.txt\n";
 }
 
-// Sort books by year
 void sortBooksByYear() {
     vector<Book*> bookList;
     Book* current = bookHead;
@@ -302,7 +301,7 @@ void sortBooksByYear() {
     cout << "Books sorted by year.\n";
 }
 
-// Search books by title
+
 void searchBooksByTitle() {
     string title;
     cout << "Enter book title to search: ";
@@ -330,7 +329,7 @@ void searchBooksByTitle() {
     }
 }
 
-// ** Main Menu **
+
 void mainMenu() {
     int choice;
     do {
